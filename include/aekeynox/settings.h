@@ -40,7 +40,7 @@
 
 // #define KB_EMULATION_DVORAK           // host: QWERTY
 // #define KB_EMULATION_ERGOL            // host: QWERTY-intl or AZERTY
-// #define KB_EMULATION_QWERTY_LAFAYETTE // host: QWERTY-intl or AZERTY
+#define KB_EMULATION_QWERTY_LAFAYETTE // host: QWERTY-intl or AZERTY
 
 // [Experimental]
 // Uncomment the following line for an extended character support on Windows.
@@ -115,7 +115,7 @@
 // Uncomment the following line to enable shift as a pinky HRM.
 // Useful for combined shortcuts, but NOT MEANT to type text!
 
-#define HRM_SHIFT
+// #define HRM_SHIFT
 
 // [Experimental]
 // Uncomment the following line to enable a mod-hold behavior when holding
