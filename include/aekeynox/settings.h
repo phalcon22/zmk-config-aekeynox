@@ -114,7 +114,6 @@
 
 // Uncomment the following line to enable shift as a pinky HRM.
 // Useful for combined shortcuts, but NOT MEANT to type text!
-// Axel: allows one handed shift+paste
 
 // #define HRM_SHIFT
 
