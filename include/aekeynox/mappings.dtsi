@@ -1,26 +1,14 @@
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
+// clang-format off
 
-// Define a dead layer key
-#define DEAD_KEY(name, key) OMIT_IF_NO_REF name: name { \
-  compatible = "zmk,behavior-macro-one-param";          \
-  #binding-cells = <1>;                                 \
-  tap-ms = <0>;                                         \
-  wait-ms = <0>;                                        \
-  bindings                                              \
-    = <&macro_tap key>                                  \
-    , <&macro_param_1to1 &kp MACRO_PLACEHOLDER>         \
-    ;                                                   \
-};
-
-// Define a shifted dead layer key
+// Convenience macro to help define ocasionnal dead-key -> shifted-key mappings.
+// Mostly a legacy feature for layouts who didn’t have the proper aliases yet.
 #define DEAD_KEY_SHIFT(name, key) OMIT_IF_NO_REF name: name { \
   compatible = "zmk,behavior-macro-one-param";                \
   #binding-cells = <1>;                                       \
   tap-ms = <0>;                                               \
   wait-ms = <0>;                                              \
   bindings                                                    \
-    = <&macro_tap key>                                        \
+    = <&macro_tap &kp key>                                    \
     , <&macro_press &kp LSHIFT>                               \
     , <&macro_tap &macro_param_1to1 &kp MACRO_PLACEHOLDER>    \
     , <&macro_release &kp LSHIFT>                             \
@@ -32,7 +20,34 @@
   compatible = "zmk,behavior-mod-morph";                             \
   #binding-cells = <0>;                                              \
   bindings = <base>, <shift>;                                        \
-  mods = <(MOD_LSFT|MOD_RSFT)>;                                      \
+  mods = <MOD_LSFT>;                                                 \
+};
+
+#define THREE_LEVEL_KEY(name, base, left_shift, right_shift) \
+  OMIT_IF_NO_REF name: name {                                \
+    compatible = "zmk,behavior-mod-morph";                   \
+    #binding-cells = <0>;                                    \
+    bindings = <&name##_right>, <left_shift>;                \
+    mods = <MOD_LSFT>;                                       \
+  };                                                         \
+  OMIT_IF_NO_REF name##_right: name##_right {                \
+    compatible = "zmk,behavior-mod-morph";                   \
+    #binding-cells = <0>;                                    \
+    bindings = <base>, <right_shift>;                        \
+    mods = <MOD_RSFT>;                                       \
+  };
+
+&caps_word {
+  no-default-keys;
+  shift-list = <CAPS_WORD_SHIFT_LIST>;
+  continue-list = <
+    CAPS_WORD_CONTINUE_LIST
+    CAPS_WORD_NUMBERS
+    DELETE
+    BACKSPACE
+  >;
+  mods = <MOD_RSFT>;  // caps-word uses right shift in case we want to
+                      // differentiate it from regular shift
 };
 
 / {

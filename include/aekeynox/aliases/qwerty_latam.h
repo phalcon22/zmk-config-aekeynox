@@ -2,7 +2,7 @@
 // https://kbdlayout.info/kbdla
 
 #ifdef KB_EXTRA_LAYERS_AUTO
-  #define KB_EXTRA_LAYERS_TRANSAT
+  #define KB_EXTRA_LAYERS_IBERICAN
 #endif
 
 /**
@@ -120,3 +120,15 @@
 #define C_LCXE  &kp PLUS
 #define C_NOT   &kp RA(GRAVE)
 #define C_DEG   &kp TILDE
+
+/**
+ * Caps-Word
+ */
+
+#define CAPS_WORD_SHIFT_LIST \
+    Q  W  E  R  T    Y  U  I  O  P \
+    A  S  D  F  G    H  J  K  L \
+    Z  X  C  V  B    N  M
+
+#define CAPS_WORD_CONTINUE_LIST FSLH \
+  DEAD_ACUTE DEAD_GRAVE DEAD_CIRCUMFLEX DEAD_DIAERESIS

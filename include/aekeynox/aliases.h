@@ -1,4 +1,3 @@
-#include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
 
@@ -59,6 +58,12 @@
   #include "aliases/qwertz_cz.h"
 #elifdef KB_LAYOUT_QWERTZ_DE
   #include "aliases/qwertz_de.h"
+#elifdef KB_LAYOUT_QWERTZ_HR
+  #include "aliases/qwertz_hr.h"
+#elifdef KB_LAYOUT_QWERTZ_HU
+  #include "aliases/qwertz_hu.h"
+#elifdef KB_LAYOUT_QWERTZ_SK
+  #include "aliases/qwertz_sk.h"
 
 // Alternative Layouts
 #elifdef KB_LAYOUT_BEPO
@@ -82,6 +87,12 @@
   #include "aliases/qwerty.h" // includes LV, PL, RO
 #endif
 
+#if !defined CAPS_WORD_SHIFT_LIST || !defined CAPS_WORD_CONTINUE_LIST
+  #error caps-word configuration macros `CAPS_WORD_SHIFT_LIST` and  \
+         `CAPS_WORD_CONTINUE_LIST` are needed but weren’t defined by  \
+         the included alias file
+#endif
+
 
 /**
  * Numbers
@@ -98,8 +109,16 @@
   #define S_N7  &kp LS(N7)
   #define S_N8  &kp LS(N8)
   #define S_N9  &kp LS(N9)
+  #define CAPS_WORD_NUMBERS \
+    LS(N1) LS(N2) LS(N3) LS(N4) LS(N5) LS(N6) LS(N7) LS(N8) LS(N9) LS(N0)
 #else
-  #define S_N0  &kp N0
+  #ifdef KB_LAYOUT_QWERTZ_HU
+    #define S_N0  &kp GRAVE
+    #define CAPS_WORD_NUMBERS N1 N2 N3 N4 N5 N6 N7 N8 N9 GRAVE
+  #else
+    #define S_N0  &kp N0
+    #define CAPS_WORD_NUMBERS N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
+  #endif
   #define S_N1  &kp N1
   #define S_N2  &kp N2
   #define S_N3  &kp N3

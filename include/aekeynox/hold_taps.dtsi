@@ -1,6 +1,3 @@
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
-
 // clang-format off
 
 /**
@@ -227,7 +224,6 @@
       tapping-term-ms = <TAPPING_TERM>;
       flavor = "tap-preferred";
       bindings = <&kp>, <&osm>;
-      hold-while-undecided-linger;
       hold-while-undecided;
     };
 
@@ -235,8 +231,14 @@
     OMIT_IF_NO_REF shift_caps: shift_caps {
       compatible = "zmk,behavior-mod-morph";
       #binding-cells = <0>;
-      bindings  = <&EZ_SK(LSHIFT)>, <&kp CAPS>;
+      bindings  = <&EZ_SK(LSHIFT)>, <&unshift_caps>;
       mods      = <(MOD_LSFT)>;
+    };
+    // removes Sticky Left Shift before activating caps word
+    OMIT_IF_NO_REF unshift_caps: unshift_caps {
+      compatible = "zmk,behavior-macro";
+      #binding-cells = <0>;
+      bindings = <&macro_tap &kp K_CANCEL>, <&caps_word>;
     };
 
     // mod-morphs to restore Shift+Space and Ctrl+Backspace for certain keymaps
@@ -313,14 +315,6 @@
       bindings = <&lkp>, <&losm>;
     };
 
-    // Fancy behaviors for one-handed Alt(+Shift)+{tab,backtick}
-    OMIT_IF_NO_REF mhsc: space_cade_with_held_mods {
-      compatible = "zmk,behavior-mod-hold";
-      #binding-cells = <2>;
-      binding = <&sc>;
-      mods-to-hold = <MOD_LALT>;
-    };
-
     OMIT_IF_NO_REF vim_prev: vim_prev {
       compatible = "zmk,behavior-mod-morph";
       #binding-cells = <0>;
@@ -337,12 +331,9 @@
       keep-mods = <(MOD_LALT|MOD_LGUI)>;
     };
 
-    OMIT_IF_NO_REF mh: raw_mod_hold {
-      compatible = "zmk,behavior-mod-hold";
-      #binding-cells = <2>;
-      binding = <&none>;
-      mods-to-hold = <(MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)>;
-    };
+    MOD_HOLD_0(mh, &none, MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)
+    MOD_HOLD_2(mhsc, &sc, MOD_LALT)
+    MOD_HOLD_2(mhhrm, &hrm, MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)
 
     OMIT_IF_NO_REF mhkp: hrm_with_raw_mh_on_hold {
       compatible = "zmk,behavior-hold-tap";
@@ -351,13 +342,6 @@
       quick-tap-ms = <QUICK_TAP>;
       flavor = "tap-preferred";
       bindings = <&mh>, <&kp>;
-    };
-
-    OMIT_IF_NO_REF mhhrm: hrm_with_held_mods {
-      compatible = "zmk,behavior-mod-hold";
-      #binding-cells = <2>;
-      binding = <&hrm>;
-      mods-to-hold = <(MOD_LCTL|MOD_RCTL|MOD_LALT|MOD_RALT|MOD_LGUI|MOD_RGUI)>;
     };
   };
 };

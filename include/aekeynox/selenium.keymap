@@ -1,7 +1,14 @@
 // Selenium keymap:
 // https://github.com/OneDeadKey/selenium
 
-#include <dt-bindings/zmk/bt.h> // bluetooth behaviors (see fn/media layer)
+// Standard ZMK headers
+#include <behaviors.dtsi>         // standard behaviors defined by ZMK
+#include <dt-bindings/zmk/keys.h> // human-readable keycodes and modifiers
+#include <dt-bindings/zmk/bt.h>   // bluetooth behaviors (see fn/media layer)
+
+// Community module headers
+#include <behaviors/mod-hold.dtsi> // Provides helper macros for the mod-hold behavior
+#include <behaviors/dead-key.dtsi> // Provides helper macros for the dead-key behavior
 
 #ifndef CI_IGNORE_USER_SETTINGS
   #include "settings.h"   // user settings
@@ -163,13 +170,19 @@
     #include "extra_layers/bepolar.dtsi"
   #elif defined KB_LAYOUT_QWERTZ_CZ
     #include "extra_layers/qwertz_cz_1dk.dtsi"
+  #elif defined KB_LAYOUT_QWERTZ_HR
+    #include "extra_layers/qwertz_hr_1dk.dtsi"
+  #elif defined KB_LAYOUT_QWERTZ_HU
+    #include "extra_layers/qwertz_hu_1dk.dtsi"
+  #elif defined KB_LAYOUT_QWERTZ_SK
+    #include "extra_layers/qwertz_sk_1dk.dtsi"
   #elif defined KB_EXTRA_LAYERS_ALTGR
     #include "extra_layers/altgr_1dk.dtsi" // default for LV, PL, RO
+  #elif defined KB_EXTRA_LAYERS_ALPINE
+    #include "extra_layers/alpine.dtsi"    // default for CH, DE, IT
+  #elif defined KB_EXTRA_LAYERS_IBERICAN
+    #include "extra_layers/iberican.dtsi"  // default for BR, ES, LATAM, PT
   #elif defined KB_EXTRA_LAYERS_NORDIC
     #include "extra_layers/nordic.dtsi"    // default for DK, NO, SE
-  #elif defined KB_EXTRA_LAYERS_TRANSALP
-    #include "extra_layers/transalp.dtsi"  // default for CH, DE, IT
-  #elif defined KB_EXTRA_LAYERS_TRANSAT
-    #include "extra_layers/transat.dtsi"   // default for BR, ES, LATAM, PT
   #endif
 #endif
